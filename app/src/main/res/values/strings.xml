@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">专注清单</string>
+
+    <!-- 底部导航 -->
+    <string name="tab_tasks">待办</string>
+    <string name="tab_focus">专注</string>
+    <string name="tab_stats">统计</string>
+
+    <!-- 通用 -->
+    <string name="settings">设置</string>
+    <string name="action_settings">设置</string>
+    <string name="action_save">保存</string>
+    <string name="action_delete">删除</string>
+    <string name="undo">撤销</string>
+
+    <!-- 任务列表 -->
+    <string name="my_tasks">我的任务</string>
+    <string name="clear_completed">清除已完成</string>
+    <string name="empty_tasks">还没有任务，点击右下角 + 添加一个吧</string>
+    <string name="task_deleted">已删除任务</string>
+    <string name="start_focus">专注</string>
+    <string name="pomodoro_count_fmt">🍅 %1$d</string>
+
+    <!-- 添加 / 编辑 -->
+    <string name="add_task">添加任务</string>
+    <string name="edit_task">编辑任务</string>
+    <string name="hint_title">任务标题</string>
+    <string name="hint_notes">备注（可选）</string>
+    <string name="label_category">分类</string>
+    <string name="label_priority">优先级</string>
+    <string name="priority_low">低</string>
+    <string name="priority_normal">中</string>
+    <string name="priority_high">高</string>
+    <string name="label_reminder">设置到期提醒</string>
+    <string name="pick_time">选择时间</string>
+    <string name="no_reminder">未设置提醒</string>
+    <string name="title_required">请输入任务标题</string>
+    <string name="cat_study">学习</string>
+    <string name="cat_work">工作</string>
+    <string name="cat_life">生活</string>
+    <string name="cat_other">其他</string>
+
+    <!-- 专注页 -->
+    <string name="free_focus">自由专注</string>
+    <string name="label_duration">专注时长</string>
+    <string name="label_link_task">关联任务</string>
+    <string name="btn_start">开始专注</string>
+    <string name="btn_pause">暂停</string>
+    <string name="btn_resume">继续</string>
+    <string name="btn_stop">结束</string>
+    <string name="minutes_focus_fmt">%1$d 分钟专注</string>
+    <string name="focus_running">保持专注，你正在前进 ✨</string>
+    <string name="focus_paused">已暂停，准备好后继续</string>
+    <string name="focus_idle_hint">选择时长，点击开始一段专注时间</string>
+    <string name="daily_quote">每日一言</string>
+    <string name="refresh">换一句</string>
+
+    <!-- 统计页 -->
+    <string name="stat_today_minutes">今日专注(分钟)</string>
+    <string name="stat_today_count">今日番茄</string>
+    <string name="stat_total_minutes">累计专注(分钟)</string>
+    <string name="stat_total_count">累计番茄</string>
+    <string name="stat_pending">待办任务</string>
+    <string name="recent_sessions">最近专注记录</string>
+    <string name="no_session">还没有专注记录，去专注页开始吧</string>
+    <string name="provider_demo">通过内容提供器查询任务</string>
+    <string name="provider_demo_result">内容提供器查询：共 %1$d 条任务（待办 %2$d / 已完成 %3$d）</string>
+    <string name="minutes_fmt">%1$d 分钟</string>
+    <string name="session_incomplete">未完成</string>
+
+    <!-- 设置页 -->
+    <string name="label_default_duration">默认专注时长</string>
+    <string name="label_sound">完成提示音</string>
+    <string name="label_ambient">专注时播放白噪音</string>
+    <string name="label_vibrate">完成时振动</string>
+    <string name="test_sound">试听</string>
+    <string name="test_vibrate">试振</string>
+    <string name="about">关于</string>
+    <string name="about_desc">专注清单 · 移动应用系统综合实践\n北京信息科技大学</string>
+    <string name="version_fmt">版本 %1$s</string>
+
+    <!-- 桌面小组件 -->
+    <string name="widget_title">专注清单</string>
+    <string name="widget_pending">待办</string>
+    <string name="widget_done">已完成</string>
+    <string name="widget_desc">查看今日待办数量</string>
+</resources>
