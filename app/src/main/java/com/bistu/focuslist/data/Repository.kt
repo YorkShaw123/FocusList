@@ -17,10 +17,17 @@ class Repository private constructor(context: Context) {
     fun observeAllTasks(): LiveData<List<Task>> = taskDao.observeAll()
     fun observePendingTasks(): LiveData<List<Task>> = taskDao.observePending()
     fun observePendingCount(): LiveData<Int> = taskDao.observePendingCount()
+    fun observeFilteredTasks(
+        query: String = "",
+        category: String = "",
+        priority: Int = -1,
+        dueOnly: Boolean = false
+    ): LiveData<List<Task>> = taskDao.observeFiltered(query, category, priority, dueOnly)
 
     suspend fun getTask(id: Long): Task? = taskDao.getById(id)
     suspend fun getTasksWithReminder(): List<Task> = taskDao.getTasksWithReminder()
     suspend fun insertTask(task: Task): Long = taskDao.insert(task)
+    suspend fun insertTasks(tasks: List<Task>): List<Long> = taskDao.insertAll(tasks)
     suspend fun updateTask(task: Task) = taskDao.update(task)
     suspend fun deleteTask(task: Task) = taskDao.delete(task)
     suspend fun clearCompletedTasks() = taskDao.clearCompleted()

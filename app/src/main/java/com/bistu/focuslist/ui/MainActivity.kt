@@ -14,6 +14,7 @@ import com.bistu.focuslist.ui.focus.FocusFragment
 import com.bistu.focuslist.ui.settings.SettingsActivity
 import com.bistu.focuslist.ui.stats.StatsFragment
 import com.bistu.focuslist.ui.tasks.TaskListFragment
+import com.bistu.focuslist.ui.template.TemplateActivity
 
 /**
  * 主界面（Activity）。
@@ -134,6 +135,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_templates -> {
+                startActivity(android.content.Intent(this, TemplateActivity::class.java))
+                true
+            }
             R.id.action_settings -> {
                 startActivity(android.content.Intent(this, SettingsActivity::class.java))
                 true

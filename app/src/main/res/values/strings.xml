@@ -10,9 +10,11 @@
     <!-- 通用 -->
     <string name="settings">设置</string>
     <string name="action_settings">设置</string>
+    <string name="action_templates">模板</string>
     <string name="action_save">保存</string>
     <string name="action_delete">删除</string>
     <string name="undo">撤销</string>
+    <string name="retry">重试</string>
 
     <!-- 任务列表 -->
     <string name="my_tasks">我的任务</string>
@@ -40,6 +42,12 @@
     <string name="cat_work">工作</string>
     <string name="cat_life">生活</string>
     <string name="cat_other">其他</string>
+
+    <!-- 在线学习模板 -->
+    <string name="online_templates">在线学习模板</string>
+    <string name="template_source_online">来自网络模板库</string>
+    <string name="template_source_local">网络不可用，当前展示本地模板</string>
+    <string name="import_template">导入任务</string>
 
     <!-- 专注页 -->
     <string name="free_focus">自由专注</string>

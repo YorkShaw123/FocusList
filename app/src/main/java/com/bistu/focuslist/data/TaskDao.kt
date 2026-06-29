@@ -38,6 +38,9 @@ interface TaskDao {
     @Insert
     suspend fun insert(task: Task): Long
 
+    @Insert
+    suspend fun insertAll(tasks: List<Task>): List<Long>
+
     @Update
     suspend fun update(task: Task)
 
@@ -46,4 +49,20 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks WHERE isDone = 1")
     suspend fun clearCompleted()
+
+    @Query(
+        "SELECT * FROM tasks " +
+            "WHERE (:query = '' OR title LIKE '%' || :query || '%' OR notes LIKE '%' || :query || '%') " +
+            "AND (:category = '' OR category = :category) " +
+            "AND (:priority < 0 OR priority = :priority) " +
+            "AND (:dueOnly = 0 OR dueTime IS NOT NULL) " +
+            "ORDER BY isDone ASC, priority DESC, " +
+            "CASE WHEN dueTime IS NULL THEN 1 ELSE 0 END ASC, dueTime ASC, createdAt DESC"
+    )
+    fun observeFiltered(
+        query: String,
+        category: String,
+        priority: Int,
+        dueOnly: Boolean
+    ): LiveData<List<Task>>
 }
