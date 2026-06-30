@@ -21,8 +21,24 @@ class Repository private constructor(context: Context) {
         query: String = "",
         category: String = "",
         priority: Int = -1,
-        dueOnly: Boolean = false
-    ): LiveData<List<Task>> = taskDao.observeFiltered(query, category, priority, dueOnly)
+        dueOnly: Boolean = false,
+        todayOnly: Boolean = false,
+        overdueOnly: Boolean = false,
+        todayStart: Long = 0L,
+        tomorrowStart: Long = Long.MAX_VALUE,
+        now: Long = System.currentTimeMillis()
+    ): LiveData<List<Task>> =
+        taskDao.observeFiltered(
+            query,
+            category,
+            priority,
+            dueOnly,
+            todayOnly,
+            overdueOnly,
+            todayStart,
+            tomorrowStart,
+            now
+        )
 
     suspend fun getTask(id: Long): Task? = taskDao.getById(id)
     suspend fun getTasksWithReminder(): List<Task> = taskDao.getTasksWithReminder()

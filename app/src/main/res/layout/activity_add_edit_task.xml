@@ -161,6 +161,21 @@
                     app:icon="@drawable/ic_time" />
             </LinearLayout>
 
+            <TextView
+                style="@style/SectionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/label_repeat_period" />
+
+            <Spinner
+                android:id="@+id/spinnerRepeatPeriod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_spinner_surface"
+                android:minHeight="48dp" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

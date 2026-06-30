@@ -88,6 +88,19 @@
                     android:textColor="?attr/colorPrimary"
                     android:visibility="gone"
                     android:text="🍅 2" />
+
+                <TextView
+                    android:id="@+id/textRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_tag"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:textSize="11sp"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:visibility="gone"
+                    android:text="@string/repeat_daily" />
             </LinearLayout>
         </LinearLayout>
 

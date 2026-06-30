@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bistu.focuslist.R
 import com.bistu.focuslist.data.Task
 import com.bistu.focuslist.databinding.ItemTaskBinding
+import com.bistu.focuslist.util.TaskRepeatUtils
 import com.bistu.focuslist.util.TimeUtils
 
 /**
@@ -52,6 +53,9 @@ class TaskAdapter(
             textCategory.text = task.category
             textPomodoro.text = ctx.getString(R.string.pomodoro_count_fmt, task.pomodoroCount)
             textPomodoro.visibility = if (task.pomodoroCount > 0) View.VISIBLE else View.GONE
+            val repeatLabel = TaskRepeatUtils.repeatLabel(task)
+            textRepeat.visibility = if (repeatLabel != null) View.VISIBLE else View.GONE
+            repeatLabel?.let { textRepeat.text = ctx.getString(it) }
 
             // 截止时间
             if (task.dueTime != null) {

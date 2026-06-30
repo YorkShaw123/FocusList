@@ -56,6 +56,8 @@ interface TaskDao {
             "AND (:category = '' OR category = :category) " +
             "AND (:priority < 0 OR priority = :priority) " +
             "AND (:dueOnly = 0 OR dueTime IS NOT NULL) " +
+            "AND (:todayOnly = 0 OR (dueTime IS NOT NULL AND dueTime >= :todayStart AND dueTime < :tomorrowStart AND isDone = 0)) " +
+            "AND (:overdueOnly = 0 OR (dueTime IS NOT NULL AND dueTime < :now AND isDone = 0)) " +
             "ORDER BY isDone ASC, priority DESC, " +
             "CASE WHEN dueTime IS NULL THEN 1 ELSE 0 END ASC, dueTime ASC, createdAt DESC"
     )
@@ -63,6 +65,11 @@ interface TaskDao {
         query: String,
         category: String,
         priority: Int,
-        dueOnly: Boolean
+        dueOnly: Boolean,
+        todayOnly: Boolean,
+        overdueOnly: Boolean,
+        todayStart: Long,
+        tomorrowStart: Long,
+        now: Long
     ): LiveData<List<Task>>
 }

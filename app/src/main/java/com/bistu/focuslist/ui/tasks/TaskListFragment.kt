@@ -102,15 +102,22 @@ class TaskListFragment : Fragment() {
             )
         }
 
-        binding.chipDueOnly.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setFilterDueOnly(isChecked)
+        binding.chipGroupDueFilter.setOnCheckedStateChangeListener { group, _ ->
+            viewModel.setFilterDueMode(
+                when (group.checkedChipId) {
+                    R.id.chipDueOnly -> TaskViewModel.DUE_FILTER_HAS_DUE
+                    R.id.chipDueToday -> TaskViewModel.DUE_FILTER_TODAY
+                    R.id.chipDueOverdue -> TaskViewModel.DUE_FILTER_OVERDUE
+                    else -> TaskViewModel.DUE_FILTER_ALL
+                }
+            )
         }
     }
 
     private fun clearFilterSelection() {
         binding.chipGroupCategory.check(R.id.chipCatAll)
         binding.chipGroupPriority.check(R.id.chipPriorityAll)
-        binding.chipDueOnly.isChecked = false
+        binding.chipGroupDueFilter.check(R.id.chipDueAll)
         viewModel.clearFilterOptions()
     }
 

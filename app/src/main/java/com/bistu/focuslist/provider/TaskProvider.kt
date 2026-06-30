@@ -90,6 +90,7 @@ class TaskProvider : ContentProvider() {
         if (!cv.containsKey("isDone")) cv.put("isDone", 0)
         if (!cv.containsKey("createdAt")) cv.put("createdAt", System.currentTimeMillis())
         if (!cv.containsKey("pomodoroCount")) cv.put("pomodoroCount", 0)
+        if (!cv.containsKey("repeatPeriod")) cv.put("repeatPeriod", 0)
 
         val writable = database.openHelper.writableDatabase
         val id = writable.insert(TABLE, SQLiteDatabase.CONFLICT_REPLACE, cv)

@@ -9,8 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.bistu.focuslist.data.Repository
 import com.bistu.focuslist.data.Task
 import com.bistu.focuslist.util.AlarmScheduler
+import com.bistu.focuslist.util.TaskRepeatUtils
+import com.bistu.focuslist.util.TimeUtils
 import com.bistu.focuslist.widget.TaskWidgetProvider
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 /**
  * 任务列表 ViewModel。
@@ -23,7 +26,7 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
     private val searchQuery = MutableLiveData("")
     private val filterCategory = MutableLiveData("")
     private val filterPriority = MutableLiveData(-1)
-    private val filterDueOnly = MutableLiveData(false)
+    private val filterDueMode = MutableLiveData(DUE_FILTER_ALL)
     private val filteredTasks = MediatorLiveData<List<Task>>()
     private var currentTaskSource: LiveData<List<Task>>? = null
 
@@ -33,17 +36,28 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
         filteredTasks.addSource(searchQuery) { refreshTaskSource() }
         filteredTasks.addSource(filterCategory) { refreshTaskSource() }
         filteredTasks.addSource(filterPriority) { refreshTaskSource() }
-        filteredTasks.addSource(filterDueOnly) { refreshTaskSource() }
+        filteredTasks.addSource(filterDueMode) { refreshTaskSource() }
         refreshTaskSource()
     }
 
     private fun refreshTaskSource() {
         currentTaskSource?.let { filteredTasks.removeSource(it) }
+        val dueMode = filterDueMode.value ?: DUE_FILTER_ALL
+        val todayStart = TimeUtils.startOfToday()
+        val tomorrowStart = Calendar.getInstance().apply {
+            timeInMillis = todayStart
+            add(Calendar.DAY_OF_YEAR, 1)
+        }.timeInMillis
         val source = repo.observeFilteredTasks(
             query = searchQuery.value.orEmpty(),
             category = filterCategory.value.orEmpty(),
             priority = filterPriority.value ?: -1,
-            dueOnly = filterDueOnly.value ?: false
+            dueOnly = dueMode == DUE_FILTER_HAS_DUE,
+            todayOnly = dueMode == DUE_FILTER_TODAY,
+            overdueOnly = dueMode == DUE_FILTER_OVERDUE,
+            todayStart = todayStart,
+            tomorrowStart = tomorrowStart,
+            now = System.currentTimeMillis()
         )
         filteredTasks.addSource(source) { filteredTasks.value = it }
         currentTaskSource = source
@@ -61,20 +75,24 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
         filterPriority.value = priority
     }
 
-    fun setFilterDueOnly(dueOnly: Boolean) {
-        filterDueOnly.value = dueOnly
+    fun setFilterDueMode(mode: Int) {
+        filterDueMode.value = mode
     }
 
     fun clearFilterOptions() {
         filterCategory.value = ""
         filterPriority.value = -1
-        filterDueOnly.value = false
+        filterDueMode.value = DUE_FILTER_ALL
     }
 
     /** 勾选 / 取消勾选完成状态 */
     fun toggleDone(task: Task) {
         viewModelScope.launch {
-            val updated = task.copy(isDone = !task.isDone)
+            val updated = if (!task.isDone) {
+                TaskRepeatUtils.nextOccurrence(task) ?: task.copy(isDone = true)
+            } else {
+                task.copy(isDone = false)
+            }
             repo.updateTask(updated)
             val ctx = getApplication<Application>()
             if (updated.isDone) {
@@ -110,5 +128,12 @@ class TaskViewModel(app: Application) : AndroidViewModel(app) {
             AlarmScheduler.schedule(ctx, task.copy(id = newId))
             TaskWidgetProvider.notifyRefresh(ctx)
         }
+    }
+
+    companion object {
+        const val DUE_FILTER_ALL = 0
+        const val DUE_FILTER_HAS_DUE = 1
+        const val DUE_FILTER_TODAY = 2
+        const val DUE_FILTER_OVERDUE = 3
     }
 }

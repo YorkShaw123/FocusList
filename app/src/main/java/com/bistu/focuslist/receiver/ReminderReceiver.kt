@@ -8,6 +8,7 @@ import com.bistu.focuslist.service.FocusTimerService
 import com.bistu.focuslist.util.AlarmScheduler
 import com.bistu.focuslist.util.NotificationHelper
 import com.bistu.focuslist.util.Prefs
+import com.bistu.focuslist.util.TaskRepeatUtils
 import com.bistu.focuslist.widget.TaskWidgetProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +52,10 @@ class ReminderReceiver : BroadcastReceiver() {
             try {
                 val repo = Repository.get(appContext)
                 repo.getTask(taskId)?.let { task ->
-                    repo.updateTask(task.copy(isDone = true))
+                    val updated = TaskRepeatUtils.nextOccurrence(task) ?: task.copy(isDone = true)
+                    repo.updateTask(updated)
                     AlarmScheduler.cancel(appContext, taskId)
+                    AlarmScheduler.schedule(appContext, updated)
                     NotificationHelper.cancelReminder(appContext, taskId)
                     TaskWidgetProvider.notifyRefresh(appContext)
                 }

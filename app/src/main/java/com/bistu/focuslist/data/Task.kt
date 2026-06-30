@@ -31,6 +31,9 @@ data class Task(
     /** 截止/提醒时间戳（毫秒）。为空表示不设置提醒 */
     val dueTime: Long? = null,
 
+    /** 重复周期：0=不重复，1=每天，2=每周，3=每月 */
+    val repeatPeriod: Int = REPEAT_NONE,
+
     /** 创建时间戳（毫秒） */
     val createdAt: Long = System.currentTimeMillis(),
 
@@ -41,5 +44,10 @@ data class Task(
         const val PRIORITY_LOW = 0
         const val PRIORITY_NORMAL = 1
         const val PRIORITY_HIGH = 2
+
+        const val REPEAT_NONE = 0
+        const val REPEAT_DAILY = 1
+        const val REPEAT_WEEKLY = 2
+        const val REPEAT_MONTHLY = 3
     }
 }

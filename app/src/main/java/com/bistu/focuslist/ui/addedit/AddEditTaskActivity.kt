@@ -41,6 +41,14 @@ class AddEditTaskActivity : AppCompatActivity() {
             getString(R.string.cat_other)
         )
     }
+    private val repeatOptions by lazy {
+        listOf(
+            getString(R.string.repeat_none),
+            getString(R.string.repeat_daily),
+            getString(R.string.repeat_weekly),
+            getString(R.string.repeat_monthly)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +65,9 @@ class AddEditTaskActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCategory.adapter = adapter
+        val repeatAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, repeatOptions)
+        repeatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerRepeatPeriod.adapter = repeatAdapter
 
         // 提醒开关
         binding.switchReminder.setOnCheckedChangeListener { _, isChecked ->
@@ -88,6 +99,9 @@ class AddEditTaskActivity : AppCompatActivity() {
                 Task.PRIORITY_HIGH -> binding.chipHigh.isChecked = true
                 else -> binding.chipNormal.isChecked = true
             }
+            binding.spinnerRepeatPeriod.setSelection(
+                task.repeatPeriod.coerceIn(Task.REPEAT_NONE, Task.REPEAT_MONTHLY)
+            )
             dueTime = task.dueTime
             if (task.dueTime != null) {
                 binding.switchReminder.isChecked = true
@@ -140,6 +154,7 @@ class AddEditTaskActivity : AppCompatActivity() {
         }
         val notes = binding.editNotes.text?.toString()?.trim().orEmpty()
         val reminder = if (binding.switchReminder.isChecked) dueTime else null
+        val repeatPeriod = selectedRepeatPeriod()
 
         lifecycleScope.launch {
             val base = existingTask
@@ -149,7 +164,8 @@ class AddEditTaskActivity : AppCompatActivity() {
                     notes = notes,
                     category = category,
                     priority = selectedPriority(),
-                    dueTime = reminder
+                    dueTime = reminder,
+                    repeatPeriod = repeatPeriod
                 )
                 val newId = repo.insertTask(newTask)
                 AlarmScheduler.schedule(this@AddEditTaskActivity, newTask.copy(id = newId))
@@ -159,7 +175,8 @@ class AddEditTaskActivity : AppCompatActivity() {
                     notes = notes,
                     category = category,
                     priority = selectedPriority(),
-                    dueTime = reminder
+                    dueTime = reminder,
+                    repeatPeriod = repeatPeriod
                 )
                 repo.updateTask(updated)
                 AlarmScheduler.cancel(this@AddEditTaskActivity, updated.id)
@@ -180,6 +197,11 @@ class AddEditTaskActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         }
+    }
+
+    private fun selectedRepeatPeriod(): Int {
+        return binding.spinnerRepeatPeriod.selectedItemPosition
+            .coerceIn(Task.REPEAT_NONE, Task.REPEAT_MONTHLY)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
