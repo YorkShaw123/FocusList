@@ -1,0 +1,72 @@
+{
+  "templates": [
+    {
+      "id": "network-final-review",
+      "title": "在线期末冲刺计划",
+      "category": "学习",
+      "description": "从梳理考点到限时训练，适合期末前一周快速进入复习节奏。",
+      "estimatedDays": 7,
+      "source": "在线模板",
+      "tasks": [
+        {
+          "title": "同步考试范围",
+          "notes": "整理课程群、课件和老师强调的重点，列出待复习章节。",
+          "category": "学习",
+          "priority": 3
+        },
+        {
+          "title": "制作复习清单",
+          "notes": "按课程拆分知识点，标记已掌握、待巩固和不会的内容。",
+          "category": "学习",
+          "priority": 3
+        },
+        {
+          "title": "完成限时模拟",
+          "notes": "按真实考试时间做一套题，记录错题和卡住的位置。",
+          "category": "学习",
+          "priority": 2
+        },
+        {
+          "title": "复盘错题",
+          "notes": "把错题对应知识点重新看一遍，并写下正确解法。",
+          "category": "学习",
+          "priority": 3
+        }
+      ]
+    },
+    {
+      "id": "network-reading-plan",
+      "title": "在线论文阅读计划",
+      "category": "学习",
+      "description": "适合课程论文、毕设调研或小组汇报前的结构化阅读。",
+      "estimatedDays": 5,
+      "source": "在线模板",
+      "tasks": [
+        {
+          "title": "筛选阅读材料",
+          "notes": "选出 3 篇核心论文，记录标题、作者、年份和来源。",
+          "category": "学习",
+          "priority": 2
+        },
+        {
+          "title": "精读摘要与结论",
+          "notes": "先判断论文问题、方法和结论是否与当前主题相关。",
+          "category": "学习",
+          "priority": 2
+        },
+        {
+          "title": "整理方法对比",
+          "notes": "用表格记录每篇论文的数据、方法、优点和局限。",
+          "category": "学习",
+          "priority": 3
+        },
+        {
+          "title": "输出阅读笔记",
+          "notes": "用自己的话写出可复用的观点和引用位置。",
+          "category": "学习",
+          "priority": 2
+        }
+      ]
+    }
+  ]
+}
